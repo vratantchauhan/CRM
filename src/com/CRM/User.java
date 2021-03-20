@@ -40,8 +40,7 @@ public class User {
 	
 //	@Password
 	@Column(name="password")
-	@Size(min=7,message="password must be 7 characters long.")
-	@Pattern(regexp="^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{7,}$", message="Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character")
+	@Pattern(regexp="^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&./])[A-Za-z\\d@$!%*?&./]{8,}$", message="Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character")
 	String password;
 	
 //	@Size(min=7,message="password must be 7 characters long.")

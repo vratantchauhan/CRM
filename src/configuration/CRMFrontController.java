@@ -22,10 +22,9 @@ import org.apache.tomcat.jdbc.pool.DataSourceFactory;
 import javax.sql.DataSource;
 
 @Configuration
+@ComponentScan(basePackages = "AOP,com.CRM,DAO")
 @EnableWebMvc
-@ComponentScan(basePackages = "com.CRM,AOP,DAO")
-@EnableAspectJAutoProxy
-@EnableTransactionManagement
+@EnableAspectJAutoProxy(proxyTargetClass=true)
 public class CRMFrontController implements WebMvcConfigurer{
 	
 	@Override
@@ -44,37 +43,37 @@ public class CRMFrontController implements WebMvcConfigurer{
 	      return bean;
 	   }
 	   
-	   @Bean
-	   public DataSource dataSource() {
-	       DriverManagerDataSource dataSource = new DriverManagerDataSource();
-
-	       dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-	       dataSource.setUsername("root");
-	       dataSource.setPassword("smartsoul");
-	       dataSource.setUrl(
-	         "jdbc:mysql://localhost:3306/myDb?createDatabaseIfNotExist=true"); 
-	       
-	       return dataSource;
-	   }
-	   @Bean
-	   public LocalContainerEntityManagerFactoryBean
-	     entityManagerFactoryBean(){
-		   HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-		    vendorAdapter.setGenerateDdl(true);
-
-		    LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
-		    factory.setJpaVendorAdapter(vendorAdapter);
-		    factory.setPackagesToScan("com.CRM,DAO");
-		    factory.setDataSource(dataSource());
-		    return factory;
-	   }
-	   
-	   @Bean
-	   public PlatformTransactionManager transactionManager(){
-	      JpaTransactionManager transactionManager = new JpaTransactionManager();
-	      transactionManager.setEntityManagerFactory(entityManagerFactoryBean().getObject());
-	      return transactionManager;
-	   }
+//	   @Bean
+//	   public DataSource dataSource() {
+//	       DriverManagerDataSource dataSource = new DriverManagerDataSource();
+//
+//	       dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+//	       dataSource.setUsername("root");
+//	       dataSource.setPassword("smartsoul");
+//	       dataSource.setUrl(
+//	         "jdbc:mysql://localhost:3306/myDb?createDatabaseIfNotExist=true"); 
+//	       
+//	       return dataSource;
+//	   }
+//	   @Bean
+//	   public LocalContainerEntityManagerFactoryBean
+//	     entityManagerFactoryBean(){
+//		   HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+//		    vendorAdapter.setGenerateDdl(true);
+//
+//		    LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
+//		    factory.setJpaVendorAdapter(vendorAdapter);
+//		    factory.setPackagesToScan("com.CRM,DAO");
+//		    factory.setDataSource(dataSource());
+//		    return factory;
+//	   }
+//	   
+//	   @Bean
+//	   public PlatformTransactionManager transactionManager(){
+//	      JpaTransactionManager transactionManager = new JpaTransactionManager();
+//	      transactionManager.setEntityManagerFactory(entityManagerFactoryBean().getObject());
+//	      return transactionManager;
+//	   }
 }
 
 

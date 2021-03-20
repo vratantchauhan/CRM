@@ -57,7 +57,7 @@ public class UserController {
 			System.out.println("error");
 			return "login";
 		}
-		boolean valid =false; 
+		boolean valid = false; 
 		System.out.println("before func");
 		valid = userDAO.loginCheck(user);
 		System.out.println("after func");

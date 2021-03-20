@@ -41,8 +41,8 @@ public class UserDAO {
 		return encoded;
 	}
 	
-	Boolean decode(User userCheck,LoginValidation user) {
-		boolean valid=false;
+	Boolean decode(User userCheck,LoginValidation user, Boolean valid) {
+		
 		System.out.println(userCheck.getPassword());
 		if(BCrypt.checkpw(user.getPassword(),userCheck.getPassword())) {
 			valid=true;
@@ -52,9 +52,10 @@ public class UserDAO {
 		
 	public void register(User user) {
 
-		String encoded = encode(user);
-		user.setPassword(encoded);
+//		String encoded = encode(user);
+//		user.setPassword(encoded);
 //		user.setConfirmPassword(encoded);
+		System.out.println("password recived by register method: "+user.getPassword());
 		try{
 			createSession();
 			session.beginTransaction();
@@ -78,7 +79,7 @@ public class UserDAO {
 			userCheck = session.get(User.class, user.getId());
 			session.getTransaction().commit();
 			System.out.println(user.getPassword()+" entered pass");
-			valid= decode(userCheck,user);
+			valid = decode(userCheck,user,valid);
 			System.out.println("valid val: "+valid);
 			System.out.println(userCheck.getPassword());
 		}catch(Exception e) {

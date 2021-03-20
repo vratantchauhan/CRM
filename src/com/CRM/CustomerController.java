@@ -55,6 +55,7 @@ public class CustomerController {
 		return "listCustomers";
 	}
 	
+
 	@RequestMapping("/listCustomerResult")
 	String listCustomerResult(@ModelAttribute("customer") Customer customer) {
 		System.out.println(idd+"from prop.");

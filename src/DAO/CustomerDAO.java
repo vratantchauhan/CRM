@@ -46,6 +46,9 @@ public class CustomerDAO implements CustomerDAOInterface{
 		session = factory.getCurrentSession();
 	}
 	
+	public void logError(Exception e) {
+		
+	}
 	
 	public void saveCustomer(Customer customer) {
 		
@@ -57,7 +60,10 @@ public class CustomerDAO implements CustomerDAOInterface{
 			session.beginTransaction();
 			session.save(customer);
 			session.getTransaction().commit();
-		}finally {
+		}catch(Exception e) {
+			logError(e);
+		}
+		finally {
 			factory.close();
 			}
 	}
@@ -70,11 +76,18 @@ public class CustomerDAO implements CustomerDAOInterface{
 			sessionCreate();
 			
 			try {
+				//customer=null; //for causing exception.
+				
 				session.beginTransaction();
 				Customer getCustomer =  session.get(Customer.class, customer.getId());
 				session.getTransaction().commit();
 				System.out.println(getCustomer);
 				return getCustomer;
+			}catch(Exception e) {
+				System.out.println("from dao class: "+e);
+				throw e;
+//				logError(e);
+//				return null;
 			}
 				finally {
 				factory.close();
@@ -82,6 +95,7 @@ public class CustomerDAO implements CustomerDAOInterface{
 			
 		}
 
+	
 	public ArrayList<Customer> viewAllCustomer() {
 		
 		sessionCreate();
